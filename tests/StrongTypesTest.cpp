@@ -118,3 +118,124 @@ TEST(OldType, UnderlyingTypeOperator) {
   ASSERT_GE(second, 2);
   ASSERT_GE(second, 1);
 }
+
+struct NoSpaceship {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = false;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = true;
+  static constexpr bool allowUnderlyingTypeInOperator = true;
+};
+static_assert(!isSpaceshipComparable<StrongType<NoSpaceship>>);
+struct NoEqual {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = true;
+  static constexpr bool equal = false;
+  static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = true;
+  static constexpr bool allowUnderlyingTypeInOperator = true;
+};
+static_assert(!isEqualComparable<StrongType<NoEqual>>);
+struct NoNotEqual {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = true;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = false;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = true;
+  static constexpr bool allowUnderlyingTypeInOperator = true;
+};
+static_assert(!isNotEqualComparable<StrongType<NoNotEqual>>);
+struct NoLessThen {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = false;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = false;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = true;
+  static constexpr bool allowUnderlyingTypeInOperator = true;
+};
+static_assert(!isLessThenComparable<StrongType<NoLessThen>>);
+struct NoLessEqual {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = false;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = false;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = true;
+  static constexpr bool allowUnderlyingTypeInOperator = true;
+};
+static_assert(!isLessEqualComparable<StrongType<NoLessEqual>>);
+struct NoGreaterThen {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = false;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = false;
+  static constexpr bool greaterEqual = true;
+  static constexpr bool allowUnderlyingTypeInOperator = true;
+};
+static_assert(!isGreaterThenComparable<StrongType<NoGreaterThen>>);
+struct NoGreaterEqual {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = false;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = false;
+  static constexpr bool allowUnderlyingTypeInOperator = true;
+};
+static_assert(!isGreaterEqualComparable<StrongType<NoGreaterEqual>>);
+
+struct NoUnderlyingTypeComparision {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = false;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = true;
+  static constexpr bool allowUnderlyingTypeInOperator = false;
+};
+static_assert(!isSpaceshipComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(!isEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+
+static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
