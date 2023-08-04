@@ -112,10 +112,12 @@ template <isStrongTypeConfig config>
 class StrongType {
  public:
   using type = std::remove_cvref_t<typename config::underlyingType>;
+  using type_cref = typename std::
+      conditional_t<sizeof(type) >= sizeof(std::uintptr_t), const type&, type>;
 
-  explicit StrongType(const type& in) : data{in} {}
+  explicit StrongType(type_cref in) : data{in} {}
   [[nodiscard]] auto get() noexcept -> type& { return data; }
-  [[nodiscard]] auto get() const noexcept -> const type& { return data; }
+  [[nodiscard]] auto get() const noexcept -> type_cref { return data; }
 
 #pragma region Compare with StrongType <config>
   template <typename otherType>
