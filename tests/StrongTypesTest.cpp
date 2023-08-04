@@ -11,5 +11,5 @@ TEST(guid, creation_and_get) {
 
 TEST(DatabaseId, creation_and_get) {
   DatabaseID id{1};
-  ASSERT_EQ(id, 1);
+  ASSERT_EQ(id.get(), 1);
 }
