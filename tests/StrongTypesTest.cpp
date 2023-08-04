@@ -20,3 +20,16 @@ TEST(DatabaseId, creation_and_get) {
   DatabaseID id{1};
   ASSERT_EQ(id.get(), 1);
 }
+
+TEST(DatabaseId, spaceship) {
+  DatabaseID first{1};
+  DatabaseID second{2};
+  ASSERT_EQ(first, first);
+  ASSERT_NE(first, second);
+  ASSERT_LE(first, first);
+  ASSERT_LE(first, second);
+  ASSERT_LT(first, second);
+  ASSERT_GT(second, first);
+  ASSERT_GE(second, second);
+  ASSERT_GE(second, first);
+}

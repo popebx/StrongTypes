@@ -18,7 +18,7 @@ class DatabaseID {
   DatabaseID() = delete;
   explicit DatabaseID(long id);
   auto get() -> long;
-
+  [[nodiscard]] std::strong_ordering operator<=>(const DatabaseID&) const;
  private:
   long id{};
 };

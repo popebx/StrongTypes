@@ -45,3 +45,9 @@ DatabaseID::DatabaseID(long newId) : id{newId} {}
 auto DatabaseID::get() -> long {
   return id;
 }
+
+std::strong_ordering DatabaseID::operator<=>(const DatabaseID& rhs) const {
+  return this->id <=> rhs.id;
+}
+
+
