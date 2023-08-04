@@ -18,6 +18,9 @@ class DatabaseID {
   DatabaseID() = delete;
   explicit DatabaseID(long id);
   auto get() -> long;
+
+  [[nodiscard]] auto operator==(const DatabaseID&) const -> bool = default;
+  [[nodiscard]] auto operator!=(const DatabaseID&) const -> bool = default;
   [[nodiscard]] std::strong_ordering operator<=>(const DatabaseID&) const;
  private:
   long id{};

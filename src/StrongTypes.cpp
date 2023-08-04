@@ -1,8 +1,7 @@
 ﻿#include <Objbase.h>
 #include <StrongTypes/StrongTypes.h>
-#include <stdexcept>
 #include <regex>
-
+#include <stdexcept>
 
 guid::guid() {
   GUID guid;
@@ -36,7 +35,8 @@ auto guid::get() -> std::string& {
 }
 
 guid::operator bool() const {
-  const std::regex r{"^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$"};
+  const std::regex r{
+      "^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$"};
   return std::regex_match(data, r);
 }
 
@@ -46,8 +46,7 @@ auto DatabaseID::get() -> long {
   return id;
 }
 
-std::strong_ordering DatabaseID::operator<=>(const DatabaseID& rhs) const {
+auto DatabaseID::operator<=>(const DatabaseID& rhs) const
+    -> std::strong_ordering {
   return this->id <=> rhs.id;
 }
-
-
