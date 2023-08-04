@@ -4,11 +4,12 @@
 class guid {
  public:
   guid() noexcept(false);
-  explicit guid(std::string_view guid);
+  explicit guid(std::string_view guid) noexcept(false);
 
-  [[nodiscard]] auto get() const -> std::string_view;
-  [[nodiscard]] auto get() -> std::string&;
+  [[nodiscard]] auto get() const noexcept -> std::string_view;
+  [[nodiscard]] auto get() noexcept -> std::string&;
   operator bool() const;
+
  private:
   std::string data{};
 };
@@ -16,12 +17,14 @@ class guid {
 class DatabaseID {
  public:
   DatabaseID() = delete;
-  explicit DatabaseID(long id);
-  auto get() -> long;
+  explicit DatabaseID(long id) noexcept;
+  auto get() noexcept -> long;
 
   [[nodiscard]] auto operator==(const DatabaseID&) const -> bool = default;
   [[nodiscard]] auto operator!=(const DatabaseID&) const -> bool = default;
-  [[nodiscard]] std::strong_ordering operator<=>(const DatabaseID&) const;
+  [[nodiscard]] auto operator<=>(const DatabaseID&) const noexcept
+      -> std::strong_ordering;
+
  private:
   long id{};
 };
