@@ -48,7 +48,6 @@ Or via compositon?
 *
 */
 
-#include <optional>
 struct DatabaseIdConfig {
   using underlyingType = long;
 
