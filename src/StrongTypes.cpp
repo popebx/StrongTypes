@@ -1,6 +1,8 @@
 ﻿#include <Objbase.h>
 #include <StrongTypes/StrongTypes.h>
 #include <stdexcept>
+#include <regex>
+
 
 guid::guid() {
   GUID guid;
@@ -34,7 +36,8 @@ auto guid::get() -> std::string& {
 }
 
 guid::operator bool() const {
-  return false;
+  const std::regex r{"^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$"};
+  return std::regex_match(data, r);
 }
 
 DatabaseID::DatabaseID(long newId) : id{newId} {}
