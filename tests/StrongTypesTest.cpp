@@ -62,6 +62,8 @@ struct AnotherDatabaseIdConfig {
   static constexpr bool lessEqual = true;
   static constexpr bool greaterThen = true;
   static constexpr bool greaterEqual = true;
+
+  static constexpr bool allowUnderlyingTypeInOperator = true;
 };
 
 using DbId2 = StrongType<AnotherDatabaseIdConfig>;

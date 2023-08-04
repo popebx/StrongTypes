@@ -60,6 +60,8 @@ struct DatabaseIdConfig {
   static constexpr bool lessEqual = true;
   static constexpr bool greaterThen = true;
   static constexpr bool greaterEqual = true;
+
+  static constexpr bool allowUnderlyingTypeInOperator = false;
 };
 
 template <typename config>
@@ -73,6 +75,8 @@ concept isStrongTypeConfig = requires() {
   { config::lessEqual } -> std::convertible_to<bool>;
   { config::greaterThen } -> std::convertible_to<bool>;
   { config::greaterEqual } -> std::convertible_to<bool>;
+
+  { config::allowUnderlyingTypeInOperator } -> std::convertible_to<bool>;
 };
 
 template <isStrongTypeConfig config>
@@ -131,53 +135,58 @@ class StrongType {
   };
 #pragma endregion
 #pragma region Compare with underlying Type
-  /*
+
   template <typename otherType>
-    requires std::is_same_v<StrongType<config>, otherType> &&
-                     (config::spaceship &&
-  config::allowUnderlyingTypeInOperator) && std::three_way_comparable<type>
+    requires std::is_same_v<type, otherType> &&
+             (config::spaceship && config::allowUnderlyingTypeInOperator) &&
+             std::three_way_comparable<type>
   [[nodiscard]] auto operator<=>(const otherType& rhs) const noexcept {
     return this->data <=> rhs.data;
   }
 
   template <typename otherType>
     requires std::is_same_v<type, otherType> &&
-                     (config::equal && config::allowUnderlyingTypeInOperator)
-                     std::equality_comparable<type> [[nodiscard]] auto
-  operator==( const otherType& rhs) const -> bool { return this->data == rhs;
+             (config::equal && config::allowUnderlyingTypeInOperator) &&
+             std::equality_comparable<type>
+  [[nodiscard]] auto operator==(const otherType& rhs) const -> bool {
+    return this->data == rhs;
   };
   template <typename otherType>
-    requires std::is_same_v<StrongType<config>, otherType> &&
-                     config::notEqual &&
-                     std::equality_comparable<type>
-                     [[nodiscard]] auto operator!=(const otherType& rhs) const
-  -> bool { return this->data != rhs.data;
+    requires std::is_same_v<type, otherType> &&
+             (config::notEqual && config::allowUnderlyingTypeInOperator) &&
+             std::equality_comparable<type>
+  [[nodiscard]] auto operator!=(const otherType& rhs) const -> bool {
+    return this->data != rhs;
   };
 
   template <typename otherType>
-    requires std::is_same_v<, otherType> &&
-                     (config::lessThen && !config::spaceship)
-                     [[nodiscard]] auto operator<(const otherType& rhs) const
-  -> bool { return this->data < rhs.data;
+    requires std::is_same_v<type, otherType> &&
+             (config::lessThen && !config::spaceship &&
+              config::allowUnderlyingTypeInOperator)
+  [[nodiscard]] auto operator<(const otherType& rhs) const -> bool {
+    return this->data < rhs;
   };
   template <typename otherType>
-    requires std::is_same_v<StrongType<config>, otherType> &&
-                     (config::lessEqual && !config::spaceship)
-                     [[nodiscard]] auto operator<=(const otherType& rhs) const
-  -> bool { return this->data <= rhs.data;
+    requires std::is_same_v<type, otherType> &&
+             (config::lessEqual && !config::spaceship &&
+              config::allowUnderlyingTypeInOperator)
+  [[nodiscard]] auto operator<=(const otherType& rhs) const -> bool {
+    return this->data <= rhs;
   };
   template <typename otherType>
-    requires std::is_same_v<StrongType<config>, otherType> &&
-                     (config::greaterThen && !config::spaceship)
-                     [[nodiscard]] auto operator>(const otherType& rhs) const
-  -> bool { return this->data > rhs.data;
+    requires std::is_same_v<type, otherType> &&
+             (config::greaterThen && !config::spaceship &&
+              config::allowUnderlyingTypeInOperator)
+  [[nodiscard]] auto operator>(const otherType& rhs) const -> bool {
+    return this->data > rhs;
   };
   template <typename otherType>
-    requires std::is_same_v<StrongType<config>, otherType> &&
-                     (config::greaterEqual && !config::spaceship)
-                     [[nodiscard]] auto operator>=(const otherType& rhs) const
-  -> bool { return this->data >= rhs.data;
-  };*/
+    requires std::is_same_v<type, otherType> &&
+             (config::greaterEqual && !config::spaceship &&
+              config::allowUnderlyingTypeInOperator)
+  [[nodiscard]] auto operator>=(const otherType& rhs) const -> bool {
+    return this->data >= rhs;
+  };
 #pragma endregion
 
  private:
