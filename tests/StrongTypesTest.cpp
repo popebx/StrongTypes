@@ -34,12 +34,12 @@ TEST(DatabaseId, spaceship) {
 }
 
 
-TEST(DatabaseId, creation_and_get) {
+TEST(DbId, creation_and_get) {
   DbId id{1};
   ASSERT_EQ(id.get(), 1);
 }
 
-TEST(DatabaseId, spaceship) {
+TEST(DbId, spaceship) {
   DbId first{1};
   DbId second{2};
   ASSERT_EQ(first, first);

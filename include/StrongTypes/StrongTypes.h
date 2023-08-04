@@ -56,9 +56,17 @@ struct DatabaseIdConfig {
   static constexpr bool notEqual = true;
 };
 
-template<typename config>
+template <typename config>
 class StrongType {
+ public:
+  using type = std::remove_cvref_t<typename config::underlyingType>;
 
+  explicit StrongType(const type& in) : data{in} {}
+  [[nodiscard]] auto get() noexcept -> type& { return data; }
+  [[nodiscard]] auto get() const noexcept -> const type& { return data; }
+
+ private:
+  type data;
 };
 
 using DbId = StrongType<DatabaseIdConfig>;

@@ -26,11 +26,11 @@ guid::guid() {
 
 guid::guid(std::string_view guid) : data{guid} {}
 
-auto guid::get() const -> std::string_view {
+auto guid::get() const noexcept -> std::string_view {
   return data;
 }
 
-auto guid::get() -> std::string& {
+auto guid::get() noexcept -> std::string& {
   return data;
 }
 
