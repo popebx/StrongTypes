@@ -3,7 +3,7 @@
 
 TEST(guid, creation_and_get) {
   guid x{};
-  ASSERT_EQ(x.get(), "");
+  ASSERT_NE(x.get(), "");
   guid y{"{a1770282-4b4f-4c82-8777-f62f03112281}"};
   ASSERT_EQ(y.get(), "{a1770282-4b4f-4c82-8777-f62f03112281}");
 }
