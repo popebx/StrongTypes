@@ -18,7 +18,7 @@ struct DatabaseIdConfig {
 };
 
 using DbId = StrongType<DatabaseIdConfig>;
-
+static_assert(sizeof(DbId) == sizeof(DatabaseIdConfig::underlyingType));
 TEST(DbId, creation_and_get) {
   DbId id{1};
   ASSERT_EQ(id.get(), 1);
