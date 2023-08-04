@@ -51,3 +51,51 @@ TEST(DbId, spaceship) {
   ASSERT_GE(second, second);
   ASSERT_GE(second, first);
 }
+
+struct AnotherDatabaseIdConfig {
+  using underlyingType = long;
+
+  static constexpr bool spaceship = true;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = true;
+};
+
+using DbId2 = StrongType<AnotherDatabaseIdConfig>;
+static_assert(!std::is_same_v<DbId2, DbId>, "Both strong types shouldn't be the same");
+
+
+static_assert(!std::equality_comparable_with<DbId, DbId2>);
+static_assert(!std::three_way_comparable_with<DbId, DbId2>);
+
+struct OldTypeConfig {
+  using underlyingType = int;
+
+  static constexpr bool spaceship = false;
+  static constexpr bool equal = true;
+  static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = true;
+};
+
+using OldType = StrongType<OldTypeConfig>;
+
+TEST(OldType, creation_and_get) {
+  OldType id{1};
+  ASSERT_EQ(id.get(), 1);
+}
+
+TEST(OldType, spaceship) {
+  OldType first{1};
+  OldType second{2};
+  ASSERT_EQ(first, first);
+  ASSERT_NE(first, second);
+  ASSERT_LE(first, first);
+  ASSERT_LE(first, second);
+  ASSERT_LT(first, second);
+  ASSERT_GT(second, first);
+  ASSERT_GE(second, second);
+  ASSERT_GE(second, first);
+}
