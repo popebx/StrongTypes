@@ -3,11 +3,12 @@
 
 class guid {
  public:
-  guid();
+  guid() noexcept(false);
   explicit guid(std::string_view guid);
 
   [[nodiscard]] auto get() const -> std::string_view;
-
+  [[nodiscard]] auto get() -> std::string&;
+  operator bool() const;
  private:
   std::string data{};
 };

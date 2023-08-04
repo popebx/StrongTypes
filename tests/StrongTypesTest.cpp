@@ -11,7 +11,7 @@ TEST(guid, creation_and_get) {
 TEST(guid, validation) {
   guid x{};
   ASSERT_FALSE(x);
-  x = {"{a1770282-4b4f-4c82-8777-f62f03112281}"};
+  x = guid{"{a1770282-4b4f-4c82-8777-f62f03112281}"};
   ASSERT_TRUE(x);
 }
 
