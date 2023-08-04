@@ -8,6 +8,13 @@ TEST(guid, creation_and_get) {
   ASSERT_EQ(y.get(), "{a1770282-4b4f-4c82-8777-f62f03112281}");
 }
 
+TEST(guid, validation) {
+  guid x{};
+  ASSERT_FALSE(x);
+  x = {"{a1770282-4b4f-4c82-8777-f62f03112281}"};
+  ASSERT_TRUE(x);
+}
+
 
 TEST(DatabaseId, creation_and_get) {
   DatabaseID id{1};
