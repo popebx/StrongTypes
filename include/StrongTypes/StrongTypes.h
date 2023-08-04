@@ -100,7 +100,7 @@ class StrongType {
   };
   template <typename otherType>
     requires std::is_same_v<StrongType<config>, otherType> &&
-             (config::greaterEqual && !config::spaceship)
+             (config::lessEqual && !config::spaceship)
              [[nodiscard]] auto operator<=(const otherType& rhs) const -> bool {
     return this->data <= rhs.data;
   };
@@ -112,7 +112,7 @@ class StrongType {
   };
   template <typename otherType>
     requires std::is_same_v<StrongType<config>, otherType> &&
-             (config::notEqual && !config::spaceship)
+             (config::greaterEqual && !config::spaceship)
              [[nodiscard]] auto operator>=(const otherType& rhs) const -> bool {
     return this->data >= rhs.data;
   };
