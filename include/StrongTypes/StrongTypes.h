@@ -48,6 +48,7 @@ Or via compositon?
 *
 */
 
+#include <optional>
 struct DatabaseIdConfig {
   using underlyingType = long;
 
@@ -65,6 +66,26 @@ class StrongType {
   [[nodiscard]] auto get() noexcept -> type& { return data; }
   [[nodiscard]] auto get() const noexcept -> const type& { return data; }
 
+  template <typename otherType>
+    requires std::is_same_v<StrongType<config>, otherType> &&
+             config::spaceship && std::three_way_comparable<type>
+  [[nodiscard]] auto operator<=>(const otherType& rhs) const noexcept {
+    return this->data <=> rhs.data;
+  }
+  template <typename otherType>
+    requires std::is_same_v<StrongType<config>, otherType> &&
+             config::equal
+             [[nodiscard]] auto operator==(const otherType& rhs) const
+             -> bool {
+    return this->data == rhs.data;
+  };
+  template <typename otherType>
+    requires std::is_same_v<StrongType<config>, otherType> &&
+             config::notEqual
+             [[nodiscard]] auto operator!=(const otherType& rhs) const
+             -> bool {
+    return this->data != rhs.data;
+  };
  private:
   type data;
 };

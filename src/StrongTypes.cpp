@@ -40,13 +40,13 @@ guid::operator bool() const {
   return std::regex_match(data, r);
 }
 
-DatabaseID::DatabaseID(long newId) : id{newId} {}
+DatabaseID::DatabaseID(long newId) noexcept : id{newId} {}
 
-auto DatabaseID::get() -> long {
+auto DatabaseID::get() noexcept -> long {
   return id;
 }
 
-auto DatabaseID::operator<=>(const DatabaseID& rhs) const
+auto DatabaseID::operator<=>(const DatabaseID& rhs) const noexcept
     -> std::strong_ordering {
   return this->id <=> rhs.id;
 }
