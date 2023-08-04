@@ -3,20 +3,15 @@ project ("StrongTypes")
 
 option(BUILD_TEST "Build Tests for ${PROJECT_NAME}" OFF)
 option(BUILD_EXAMPLES "Build Examples for ${PROJECT_NAME}" OFF)
-option(SHARED_LIB "Build as shared Library" OFF)
 
 # Add source to this project's executable.
 set(PCH_FILE "src/pch.h")
-set(SRC_FILES "src/StrongTypes.cpp" "include/StrongTypes/StrongTypes.h")
+set(SRC_FILES  "include/StrongTypes/StrongTypes.h")
 
-if(${SHARED_LIB})
-    add_library (StrongTypes SHARED ${SRC_FILES} ${PCH_FILE})
-else()
-    add_library (StrongTypes STATIC ${SRC_FILES} ${PCH_FILE})
-endif()
+add_library (StrongTypes INTERFACE ${SRC_FILES} ${PCH_FILE})
 
-target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/")
-target_precompile_headers(${PROJECT_NAME} PRIVATE ${PCH_FILE})
+target_include_directories(${PROJECT_NAME} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include/")
+target_precompile_headers(${PROJECT_NAME} INTERFACE ${PCH_FILE})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 
 if(${BUILD_EXAMPLES}) 
