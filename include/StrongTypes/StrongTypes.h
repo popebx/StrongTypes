@@ -1,33 +1,7 @@
 ﻿#pragma once
-#include <string>
+#include <concepts>
+#include <compare>
 
-class guid {
- public:
-  guid() noexcept(false);
-  explicit guid(std::string_view guid) noexcept(false);
-
-  [[nodiscard]] auto get() const noexcept -> std::string_view;
-  [[nodiscard]] auto get() noexcept -> std::string&;
-  operator bool() const;
-
- private:
-  std::string data{};
-};
-
-class DatabaseID {
- public:
-  DatabaseID() = delete;
-  explicit DatabaseID(long id) noexcept;
-  auto get() noexcept -> long;
-
-  [[nodiscard]] auto operator==(const DatabaseID&) const -> bool = default;
-  [[nodiscard]] auto operator!=(const DatabaseID&) const -> bool = default;
-  [[nodiscard]] auto operator<=>(const DatabaseID&) const noexcept
-      -> std::strong_ordering;
-
- private:
-  long id{};
-};
 
 /*
 * Basic Idea is to have following Code:
@@ -47,21 +21,6 @@ StrongType<underlying_type>; Additional Customizations Points via Inheritance?
 Or via compositon?
 *
 */
-
-struct DatabaseIdConfig {
-  using underlyingType = long;
-
-  static constexpr bool spaceship = true;
-  static constexpr bool equal = true;
-  static constexpr bool notEqual = true;
-
-  static constexpr bool lessThen = true;
-  static constexpr bool lessEqual = true;
-  static constexpr bool greaterThen = true;
-  static constexpr bool greaterEqual = true;
-
-  static constexpr bool allowUnderlyingTypeInOperator = false;
-};
 
 template <typename config>
 concept isStrongTypeConfig = requires() {
@@ -230,5 +189,3 @@ class StrongType {
  protected:
   type data;
 };
-
-using DbId = StrongType<DatabaseIdConfig>;
