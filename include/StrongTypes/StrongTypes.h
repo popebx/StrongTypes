@@ -80,6 +80,14 @@ concept isStrongTypeConfig = requires() {
 };
 
 template <typename type>
+concept isEqualComparable = requires(const type& a, const type& b) {
+  { a == b } -> std::convertible_to<bool>;
+};
+template <typename type>
+concept isNotEqualComparable = requires(const type& a, const type& b) {
+  { a != b } -> std::convertible_to<bool>;
+};
+template <typename type>
 concept isGreaterThenComparable = requires(const type& a, const type& b) {
   { a > b } -> std::convertible_to<bool>;
 };
