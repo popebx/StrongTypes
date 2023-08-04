@@ -79,6 +79,24 @@ concept isStrongTypeConfig = requires() {
   { config::allowUnderlyingTypeInOperator } -> std::convertible_to<bool>;
 };
 
+template <typename type>
+concept isGreaterThenComparable = requires(const type& a, const type& b) {
+  { a > b } -> std::convertible_to<bool>;
+};
+template <typename type>
+concept isGreaterEqualComparable = requires(const type& a, const type& b) {
+  { a >= b } -> std::convertible_to<bool>;
+};
+template <typename type>
+concept isLessThenComparable = requires(const type& a, const type& b) {
+  { a < b } -> std::convertible_to<bool>;
+};
+template <typename type>
+concept isLessEqualComparable = requires(const type& a, const type& b) {
+  { a <= b } -> std::convertible_to<bool>;
+};
+
+
 template <isStrongTypeConfig config>
 class StrongType {
  public:
