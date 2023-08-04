@@ -151,7 +151,7 @@ struct NoNotEqual {
   using underlyingType = int;
 
   static constexpr bool spaceship = true;
-  static constexpr bool equal = true;
+  static constexpr bool equal = false;
   static constexpr bool notEqual = false;
 
   static constexpr bool lessThen = true;
@@ -160,7 +160,9 @@ struct NoNotEqual {
   static constexpr bool greaterEqual = true;
   static constexpr bool allowUnderlyingTypeInOperator = true;
 };
-static_assert(!isNotEqualComparable<StrongType<NoNotEqual>>);
+static_assert(!isNotEqualComparable<
+              StrongType<NoNotEqual>>);  // Apparently this can be fulfilled if
+                                         // equal is true
 struct NoLessThen {
   using underlyingType = int;
 
@@ -231,11 +233,17 @@ struct NoUnderlyingTypeComparision {
   static constexpr bool greaterEqual = true;
   static constexpr bool allowUnderlyingTypeInOperator = false;
 };
-static_assert(!isSpaceshipComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(
+    !isSpaceshipComparable<StrongType<NoUnderlyingTypeComparision>, int>);
 static_assert(!isEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
-static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(
+    !isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
 
-static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
-static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
-static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
-static_assert(!isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(
+    !isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(
+    !isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(
+    !isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
+static_assert(
+    !isNotEqualComparable<StrongType<NoUnderlyingTypeComparision>, int>);
