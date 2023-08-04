@@ -78,6 +78,7 @@ struct OldTypeConfig {
   static constexpr bool lessEqual = true;
   static constexpr bool greaterThen = true;
   static constexpr bool greaterEqual = true;
+  static constexpr bool allowUnderlyingTypeInOperator = true;
 };
 
 using OldType = StrongType<OldTypeConfig>;
@@ -87,7 +88,7 @@ TEST(OldType, creation_and_get) {
   ASSERT_EQ(id.get(), 1);
 }
 
-TEST(OldType, spaceship) {
+TEST(OldType, OldOperator) {
   OldType first{1};
   OldType second{2};
   ASSERT_EQ(first, first);
@@ -98,4 +99,17 @@ TEST(OldType, spaceship) {
   ASSERT_GT(second, first);
   ASSERT_GE(second, second);
   ASSERT_GE(second, first);
+
+}
+TEST(OldType, UnderlyingTypeOperator) {
+  OldType first{1};
+  OldType second{2};
+  ASSERT_EQ(first, 1);
+  ASSERT_NE(first, 2);
+  ASSERT_LE(first, 1);
+  ASSERT_LE(first, 2);
+  ASSERT_LT(first, 2);
+  ASSERT_GT(second, 1);
+  ASSERT_GE(second, 2);
+  ASSERT_GE(second, 1);
 }
