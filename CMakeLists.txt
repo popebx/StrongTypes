@@ -5,13 +5,11 @@ option(BUILD_TEST "Build Tests for ${PROJECT_NAME}" OFF)
 option(BUILD_EXAMPLES "Build Examples for ${PROJECT_NAME}" OFF)
 
 # Add source to this project's executable.
-set(PCH_FILE "src/pch.h")
+
 set(SRC_FILES  "include/StrongTypes/StrongTypes.h")
 
 add_library (StrongTypes INTERFACE ${SRC_FILES} ${PCH_FILE})
-
 target_include_directories(${PROJECT_NAME} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include/")
-target_precompile_headers(${PROJECT_NAME} INTERFACE ${PCH_FILE})
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 
 if(${BUILD_EXAMPLES}) 
