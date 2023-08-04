@@ -28,3 +28,21 @@ class DatabaseID {
  private:
   long id{};
 };
+
+/*  
+* Basic Idea is to have following Code:
+* struct DatabaseIDConfig { 
+    using underlying_type=long;
+    constexpr bool spaceship = true;
+    constexpr bool equal = true; 
+    constexpr bool notEqual = true;
+};
+using DatabaseId = StrongType<DatabaseIDConfig>;
+
+Problems:
+    noexcept => should be inherited from underlying type!
+    explicit will be fix for now, since implicit conversion makes no sense
+    BinaryLayout should be sizeof(underlying_type) == StrongType<underlying_type>; 
+    Additional Customizations Points via Inheritance? Or via compositon?
+* 
+*/
