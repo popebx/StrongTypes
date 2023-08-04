@@ -33,7 +33,6 @@ TEST(DatabaseId, spaceship) {
   ASSERT_GE(second, first);
 }
 
-
 TEST(DbId, creation_and_get) {
   DbId id{1};
   ASSERT_EQ(id.get(), 1);
@@ -58,11 +57,16 @@ struct AnotherDatabaseIdConfig {
   static constexpr bool spaceship = true;
   static constexpr bool equal = true;
   static constexpr bool notEqual = true;
+
+  static constexpr bool lessThen = true;
+  static constexpr bool lessEqual = true;
+  static constexpr bool greaterThen = true;
+  static constexpr bool greaterEqual = true;
 };
 
 using DbId2 = StrongType<AnotherDatabaseIdConfig>;
-static_assert(!std::is_same_v<DbId2, DbId>, "Both strong types shouldn't be the same");
-
+static_assert(!std::is_same_v<DbId2, DbId>,
+              "Both strong types shouldn't be the same");
 
 static_assert(!std::equality_comparable_with<DbId, DbId2>);
 static_assert(!std::three_way_comparable_with<DbId, DbId2>);
@@ -99,7 +103,6 @@ TEST(OldType, OldOperator) {
   ASSERT_GT(second, first);
   ASSERT_GE(second, second);
   ASSERT_GE(second, first);
-
 }
 TEST(OldType, UnderlyingTypeOperator) {
   OldType first{1};
