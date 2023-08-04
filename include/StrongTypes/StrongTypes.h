@@ -227,7 +227,7 @@ class StrongType {
   };
 #pragma endregion
 
- private:
+ protected:
   type data;
 };
 
